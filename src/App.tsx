@@ -1,10 +1,12 @@
-import './App.css';
-import Auth from './components/Auth';
+import NavigationHeader from './components/NavigationHeader/NavigationHeader';
+import HomePage from './components/HomePage/HomePage';
 
 function App() {
   return (
     <div className="App">
-      <Auth />
+      <NavigationHeader/>
+      <HomePage/>
+      
     </div>
   );
 }
