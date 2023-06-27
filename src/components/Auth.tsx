@@ -7,10 +7,7 @@ export default function Auth() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    console.log(auth?.currentUser?.email)
-
     const signIn = async () => {
-
         await createUserWithEmailAndPassword(auth, email, password)
     }
 

@@ -5,6 +5,7 @@ import Catalog from '../Catalog/Catalog'
 
 
 export default function HomePage() {
+
     return (
         <StyledEngineProvider injectFirst>
             <Typography variant='h1' component={'h1'} className={styles['homePage']}>
@@ -13,7 +14,7 @@ export default function HomePage() {
             <Typography variant='subtitle1' component={'p'}>
                 Browse restaurants
             </Typography>
-            <Catalog/>
+            <Catalog />
         </StyledEngineProvider>
     )
 }

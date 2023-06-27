@@ -1,10 +1,7 @@
 import { Typography, Stack, ImageList, ImageListItem, ImageListItemBar, Rating, Button } from '@mui/material'
-import BookmarkIcon from '@mui/icons-material/Bookmark'
-import FavouriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import styles from './Catalog.module.css';
 import { StyledEngineProvider } from '@mui/material/styles'
-import { transform } from 'typescript';
+import { useState, useEffect } from 'react';
 
 
 const itemData = [
@@ -59,21 +56,25 @@ const itemData = [
 ];
 export default function Catalog() {
 
+    const [restaurants, setRestaurants] = useState([]);
+
+
+
     return (
         <StyledEngineProvider injectFirst>
             <Stack spacing={2} className={styles["catalog"]}>
-                <ImageList sx={{ width: 1200, height: 600}} cols={4} gap={20} >
+                <ImageList sx={{ width: 1200 }} cols={5} gap={20} >
                     {itemData.map((item) => (
-                        <ImageListItem key={item.img} sx={{border: 1, borderColor: 'whitesmoke', borderRadius: 2, backgroundColor: 'white', ":hover": {boxShadow: 5} }}>
-                               <Typography variant='h6' gutterBottom sx={{textAlign: 'center'}}>asddd</Typography>
+                        <ImageListItem key={item.img} sx={{ border: 1, borderColor: 'whitesmoke', borderRadius: 2, backgroundColor: 'white', ":hover": { boxShadow: 5 } }}>
+                            <Typography variant='h6' gutterBottom sx={{ textAlign: 'center' }}>asddd</Typography>
                             <img src={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2`}
                                 className={styles['images']}
                                 alt={item.title}
                                 loading='lazy'
-                                onClick={()=>console.log("Yes")}
+                                onClick={() => console.log("Yes")}
                             />
                             {/* <ImageListItemBar title={item.title} subtitle="asd" actionIcon={<BookmarkIcon onClick={() => console.log("yes")} />} /> */}
-                            <ImageListItemBar className={styles['rating']} positionBelow title={<Rating className={styles['stars']}
+                            <ImageListItemBar className={styles['rating']} title={<Rating className={styles['stars']}
                                 precision={0.5}
                                 size='medium'
                             />} />
