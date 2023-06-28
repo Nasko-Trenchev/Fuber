@@ -17,8 +17,6 @@ export default function Login() {
     const navigate = useNavigate();
 
     const onUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.name)
-        console.log(e.target.value)
         setformInput(oldData => ({
             ...oldData,
             [e.target.name]: e.target.value
@@ -27,7 +25,7 @@ export default function Login() {
 
     const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         try {
-            await loginUser(formInput.email, formInput.password)
+            await loginUser(formInput.email, formInput.password);
             navigate('/');
         } catch (error) {
             setformInput({
