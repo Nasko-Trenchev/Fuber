@@ -71,7 +71,7 @@ export const Register = () => {
                 <FormControl>
                     <TextField
                         label='E-mail'
-                        helperText="Please type in your password"
+                        helperText="Please type in your E-mail"
                         name='email'
                         variant='outlined'
                         size='small'

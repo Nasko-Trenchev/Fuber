@@ -1,0 +1,33 @@
+.detailsPageContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.detailsPageContainer h1 {
+    flex: 1 0 100%;
+}
+
+.menuItem {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.menuItem ul {
+    display: flex;
+    padding: 0;
+}
+
+.menuItem li {
+    display: flex;
+}
+
+.menuItem img {
+    max-width: 150px;
+}
+
+.menuDescription {
+    text-align: start; 
+    max-width: 400px;
+}

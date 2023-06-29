@@ -26,4 +26,10 @@
     margin-top: 10px;
 }
 
+.login-form a {
+    text-decoration: none;
+    margin-top: 10px;
+    color: blue;
+}
+
 

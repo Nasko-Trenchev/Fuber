@@ -2,6 +2,8 @@ import { AppBar, Toolbar, IconButton, Typography, Stack, Button } from "@mui/mat
 import { StyledEngineProvider } from '@mui/material/styles';
 import { NavLink, useNavigate } from 'react-router-dom';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
 import { auth } from "../../config/firebase";
 
 import styles from './NavigationHeader.module.css';
@@ -18,10 +20,11 @@ export default function NavigationHeader() {
                     <IconButton size="large" edge='start' color="inherit" aria-label="logo" onClick={() => { navigate('/') }}>
                         <DeliveryDiningIcon />
                     </IconButton>
-                    <Typography variant="h6" component='div' sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" component='div' sx={{ flexGrow: 1, fontFamily: 'Inter sans-serif', fontSize: '24px', fontStyle: 'italic' }}>
                         <NavLink to={'/'} className={styles['links']}>Fuber</NavLink>
                     </Typography>
-                    <Stack direction={'row'} spacing={2}>
+
+                    <Stack direction={'row'}>
                         {auth.currentUser ?
                             <>
                                 <Button color="inherit"><NavLink to={'/'} className={styles['links']}>Home</NavLink></Button>
@@ -34,6 +37,12 @@ export default function NavigationHeader() {
                             </>
                         }
                     </Stack>
+                    <IconButton size="large" edge='start' color="inherit" aria-label="logo" sx={{margin: '1px'}}>
+                        <FacebookIcon />
+                    </IconButton>
+                    <IconButton size="large" edge='start' color="inherit" aria-label="logo" sx={{margin: '1px'}}>
+                        <InstagramIcon />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
         </StyledEngineProvider>

@@ -1,21 +1,27 @@
-import { Stack, TextField, Typography, Button, FormControl } from '@mui/material';
-import { useState } from 'react';
+import { Stack, TextField, Typography, Button, FormControl, Snackbar, AlertProps, Alert } from '@mui/material';
+import { useState, forwardRef } from 'react';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 import styles from './PasswordReset.module.css';
 
+const SnackbarAlert = forwardRef<HTMLDivElement, AlertProps>(
+    function SnackbarAlert(props, ref) {
+        return <Alert elevation={6} ref={ref} {...props} />
+    }
+)
 
 export default function PasswordReset() {
     const [error, setError] = useState("")
-    const [confirm, setConfirm] = useState("");
     const [formInput, setformInput] = useState("");
+    const [open, setOpen] = useState(false);
 
     const passwordReset = () => {
         const auth = getAuth();
+        setOpen(true);
         sendPasswordResetEmail(auth, formInput)
             .then(() => {
-                setConfirm("Password reset email sent!")
+                setOpen(true)
                 // Password reset email sent!
                 // ..
             })
@@ -38,6 +44,13 @@ export default function PasswordReset() {
             });
     }
 
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpen(false);
+    }
+
     return (
         <StyledEngineProvider injectFirst>
             <Stack spacing={3} className={styles['login-form']}>
@@ -45,16 +58,27 @@ export default function PasswordReset() {
                 <FormControl>
                     <TextField
                         label='E-mail'
-                        helperText={!confirm && !error ? "Please type in your E-Mail" : ""} 
+                        helperText={!error ? "Please type in your E-Mail" : ""}
                         name='email'
                         variant='outlined'
                         size='small'
                         required
                         onChange={(e) => setformInput(e.target.value)}
                     />
-                    {confirm && <Typography color={'green'}>{confirm}</Typography>}
                     {error && <Typography color={'red'}>{error}</Typography>}
-                    <Button variant='contained' size='medium' onClick={passwordReset}>Reset password</Button>
+                    <Button variant='contained' size='medium' onClick={passwordReset} className={styles['resetBtn']}>Reset password</Button>
+                    <Snackbar
+                        open={open}
+                        onClose={handleClose}
+                        autoHideDuration={40000}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center'
+                        }} >
+                        <SnackbarAlert onClose={handleClose} severity='success'>
+                            Email for password reset was sent!
+                        </SnackbarAlert>
+                    </Snackbar>
                 </FormControl>
             </Stack>
         </StyledEngineProvider>

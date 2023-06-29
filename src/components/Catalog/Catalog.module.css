@@ -1,7 +1,39 @@
 .catalog {
     display: flex;
     align-items: center;
+    margin-top: 20px;
 }
+
+.catalog section {
+    display: flex;
+    min-width: 1200px;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.catalog section ul {
+    margin: 0;
+    padding: 0;
+    padding-inline-start: 0px !important;
+    list-style: none;
+    align-items: flex-start;
+    justify-content: flex-start;
+    display: flex;
+    flex-grow: 1;
+}
+
+.catalog section ul li {
+    font-size: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color: whitesmoke;
+}
+
+.css-1p5q5e5-MuiStack-root>:not(style)+:not(style) {
+    margin-top: 0px;
+}
+
+
 
 .rating {
     border-bottom-left-radius: 0.5em;
