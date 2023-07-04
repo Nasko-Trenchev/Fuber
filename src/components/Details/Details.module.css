@@ -6,6 +6,8 @@
 
 .detailsPageContainer h1 {
     flex: 1 0 100%;
+    text-align: center;
+    padding: 0.5em;
 }
 
 .menuItem {
@@ -24,10 +26,41 @@
 }
 
 .menuItem img {
-    max-width: 150px;
+    display: block;
+    width: 150px;
+    height: 100px;
 }
 
-.menuDescription {
-    text-align: start; 
-    max-width: 400px;
+.menuItemImgContainer {
+    display: flex;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+}
+
+.descriptionContainer {
+    max-width: 175px;
+    overflow: hidden;
+}
+
+.descriptionContainer p {
+    font-size: 16px;
+}
+
+.menuPrice {
+    justify-items: flex-end;
+    align-items: center;
+}
+
+.menuPrice p {
+    margin: 0;
+}
+
+.ingreadiants {
+    font-size: 14px;
+}
+
+.test {
+    background-color: inherit;
+    border: none;   
 }

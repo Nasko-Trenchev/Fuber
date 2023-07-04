@@ -27,19 +27,31 @@
     padding-left: 1em;
     padding-right: 1em;
     background-color: whitesmoke;
+    border: 1px solid black;
+    margin-inline-end: 10px;
 }
 
 .css-1p5q5e5-MuiStack-root>:not(style)+:not(style) {
     margin-top: 0px;
 }
 
-
-
 .rating {
     border-bottom-left-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
     background-color: rgb(241, 238, 238);
 }
+
+.rating p {
+    color: gray;
+}
+
+.catalogIcons {
+   display: flex;
+   color: gray;
+   align-items: center;
+   gap: 0.5em;
+}
+
 
 .stars {
     margin-left: 1.5em;
@@ -48,5 +60,9 @@
 .images {
     border-bottom-left-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
+    min-height: 270px;
+}
 
+.images:hover {
+    opacity: 0.8;
 }

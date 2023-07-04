@@ -1,7 +1,9 @@
 import { Typography, Box, ImageListItem, CircularProgress } from '@mui/material'
 import { StyledEngineProvider } from '@mui/material/styles'
-import styles from './HomePage.module.css'
 import { Suspense, lazy } from 'react';
+import Footer from '../Footer/Footer';
+
+import styles from './HomePage.module.css'
 
 
 
@@ -21,21 +23,21 @@ export default function HomePage() {
                     className={styles['homePage']}>
                     Fuber
                 </Typography>
-                <Typography component={'p'} sx={{ fontFamily: 'Inter sans-serif', fontSize: '18px', fontStyle: 'italic' }}>
+                <Typography component={'p'} sx={{ fontFamily: 'Inter sans-serif', fontSize: '18px', fontStyle: 'italic', textIndent: '5px' }}>
                     Welcome to <b>Fuber</b>, your one-stop solution for ordering delicious food from a variety of
                     restaurants, all in the comfort of your own home! Whether you're craving a
                     mouthwatering burger, a piping hot pizza, or a healthy salad, we've got you covered.
                 </Typography>
-                <Typography component={'p'} sx={{ fontFamily: 'Inter sans-serif', fontSize: '18px', fontStyle: 'italic' }}>
+                <Typography component={'p'} sx={{ fontFamily: 'Inter sans-serif', fontSize: '18px', fontStyle: 'italic', textIndent: '5px' }}>
                     <b>Fuber</b> has simplified the way you order food online,
                     making it effortless and convenient. Say goodbye to long queues and busy phone lines,
                     and say hello to a seamless, user-friendly experience that puts the power of choice at your fingertips.
                 </Typography>
             </div>
             <Suspense fallback={<CircularProgress variant="determinate" value={100} />}>
-            <Catalog />
+                <Catalog />
+                <Footer />
             </Suspense>
-
         </StyledEngineProvider>
     )
 }
