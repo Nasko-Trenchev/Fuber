@@ -1,8 +1,9 @@
-import { Typography, Stack, Container, Button, TextField } from "@mui/material";
+import { Typography, Stack, Container, Button, TextField, tableSortLabelClasses } from "@mui/material";
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { db } from "../../config/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { Order } from "../../contexts/OrderContext";
 
 import styles from './Details.module.css';
 
@@ -17,34 +18,20 @@ type Dish = {
     type: string,
 }
 
-type Orders = {
-    Order: {
-        meal: Dish[],
-        count: 0
-    }[]
-}
-
 interface RestaurantDetails {
     Dishes: Dish[],
 }
-
-type Count = {
-    obj: {
-        name: string
-
-    }
-}
-
 
 export default function Details() {
 
     const [restaurantDetails, setRestaurantDetails] = useState<RestaurantDetails | null>(null)
     const [count, setCount] = useState<Record<string, number>>({});
-    const [order, setOrder] = useState<Orders | null>(null);
-    const { restaurantId, name } = useParams();
+    const { restaurantId, restaurantName } = useParams();
+
+    const { order, addOrder, increaseAmout } = Order();
 
     const currentRestaurantRef = doc(db, "Restaurants", restaurantId!);
-    const currentRestaurantCollectionRef = doc(db, "Restaurants", restaurantId!, "Details", name!);
+    const currentRestaurantCollectionRef = doc(db, "Restaurants", restaurantId!, "Details", restaurantName!);
 
     useEffect(() => {
         const getDetails = async () => {
@@ -65,17 +52,38 @@ export default function Details() {
         } else if (count[name] === 0 && direction === "decrease") {
             return;
         }
-        setCount(value => ({ ...value, [name]: value[name] + directionMap[direction] * 1 }))
+        else if (count[name] === 10 && direction === "increase") {
+            return;
+        }
+        else {
+            setCount(value => ({ ...value, [name]: value[name] + directionMap[direction] * 1 }))
+        }
+    }
+
+    const addToChart = (image: string, name: string, prize: number) => {
+
+        const orderObj = {
+            imageUrl: image,
+            title: name,
+            prize: prize,
+            count: count[name],
+            restaurantName: restaurantName as string,
+        }
+        setCount(value => ({ ...value, [name]: 0 }))
+        const hasIncludedBefore = order.some(x => x.title === name);
+
+        if (hasIncludedBefore) {
+            increaseAmout(name, count[name])
+        }
+        else {
+            addOrder(orderObj);
+        }
     }
 
     return (
         <div className={styles['detailsPageContainer']}>
-            <>{restaurantDetails?.Dishes.map((dish) => {
-                <h1>{dish.name}</h1>
-            })}
-            </>
-            <Typography variant="h1">{name}</Typography>
-            <Stack sx={{ border: '1px solid black' }} minWidth={"1200px"} direction='column' spacing={2}>
+            <Typography variant="h1">{restaurantName}</Typography>
+            <Stack minWidth={"1200px"} direction='column' spacing={2}>
                 <>
                     {restaurantDetails?.Dishes.map((dish) => (
                         <Stack key={dish.name} spacing={2} direction='row' className={styles['menuItem']}>
@@ -99,15 +107,15 @@ export default function Details() {
                                         <button>+</button>
                                         <button>-</button>
                                     </form> */}
-                                    <Button onClick={() => { changeCount(dish.name, "increase") }} sx={{ maxWidth: '10px', maxHeight: '30px' }} >+</Button>
+                                    <Button disabled={count[dish.name] ? false : true} onClick={() => { changeCount(dish.name, "decrease") }} sx={{ maxWidth: '10px', maxHeight: '30px' }} >-</Button>
                                     <span>{count[dish.name] || 0}</span>
                                     {/* <label htmlFor="count">+</label>
                                     <input type="button" id="count" className={styles['test']} value={1}></input>
                                     <label htmlFor="count">-</label> */}
-                                    <Button onClick={() => { changeCount(dish.name, "decrease") }} sx={{ maxWidth: '10px', maxHeight: '30px' }} >-</Button>
+                                    <Button onClick={() => { changeCount(dish.name, "increase") }} sx={{ maxWidth: '10px', maxHeight: '30px' }} >+</Button>
                                 </Stack>
                                 <Stack className={styles['menuPrice']} sx={{ flexBasis: '50%', marginTop: '30px' }}>
-                                    <Button>Add to chart</Button>
+                                    <Button disabled={count[dish.name] ? false : true} onClick={() => addToChart(dish.Image, dish.name, dish.price)}>Add to chart</Button>
                                     <p>{dish.price} лв.</p>
                                 </Stack>
                             </Stack>

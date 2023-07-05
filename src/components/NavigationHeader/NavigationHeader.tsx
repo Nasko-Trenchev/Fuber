@@ -1,10 +1,14 @@
-import { AppBar, Toolbar, IconButton, Typography, Stack, Button } from "@mui/material";
+import { useState } from 'react';
+import { AppBar, Toolbar, IconButton, Typography, Stack, Button, Badge } from "@mui/material";
 import { StyledEngineProvider } from '@mui/material/styles';
 import { NavLink, useNavigate } from 'react-router-dom';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Order } from "../../contexts/OrderContext";
 import { auth } from "../../config/firebase";
+import ShoppingCart from "../ShoppingCart/ShoppingCart";
 
 import styles from './NavigationHeader.module.css';
 
@@ -12,6 +16,9 @@ import styles from './NavigationHeader.module.css';
 export default function NavigationHeader() {
 
     const navigate = useNavigate();
+
+    const { order, setShowOrder, showOrder } = Order();
+
 
     return (
         <StyledEngineProvider injectFirst>
@@ -37,14 +44,21 @@ export default function NavigationHeader() {
                             </>
                         }
                     </Stack>
-                    <IconButton size="large" edge='start' color="inherit" aria-label="logo" sx={{margin: '1px'}}>
+                    <IconButton size="large" edge='start' color="inherit" aria-label="logo" sx={{ margin: '1px' }}>
                         <FacebookIcon />
                     </IconButton>
-                    <IconButton size="large" edge='start' color="inherit" aria-label="logo" sx={{margin: '1px'}}>
+                    <IconButton size="large" edge='start' color="inherit" aria-label="logo" sx={{ margin: '1px' }}>
                         <InstagramIcon />
+                    </IconButton>
+                    <IconButton onClick={() => setShowOrder(!showOrder)} size="large" edge='start' color="inherit" aria-label="logo" sx={{ margin: '1px' }}>
+                        <Badge color="primary" badgeContent={order.length || 0} sx={{ margin: '1px' }}>
+                            <ShoppingCartIcon />
+                        </Badge>
                     </IconButton>
                 </Toolbar>
             </AppBar>
+
+            {showOrder && <ShoppingCart />}
         </StyledEngineProvider>
     )
 }

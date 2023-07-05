@@ -4,6 +4,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { UserAuth } from '../../contexts/UserContext';
 import { User, getAuth, sendEmailVerification, sendPasswordResetEmail } from "firebase/auth";
+import { Order } from '../../contexts/OrderContext';
 
 import styles from './Register.module.css';
 
@@ -13,6 +14,11 @@ export const Register = () => {
         password: '',
         rePassword: '',
     });
+
+    const { setShowOrder } = Order();
+
+    setShowOrder(false);
+
 
     const { user } = UserAuth();
 
