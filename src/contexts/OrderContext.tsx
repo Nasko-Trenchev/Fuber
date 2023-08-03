@@ -42,7 +42,6 @@ export const OrderContextProvider = ({ children }: OrderContextProviderProps) =>
     }
 
     const increaseAmout = (title: string, icreaseCount: number) => {
-
         setOrder(prevState => {
             const newState = prevState.map(obj => {
                 if (obj.title === title) {
@@ -54,7 +53,6 @@ export const OrderContextProvider = ({ children }: OrderContextProviderProps) =>
             })
             return newState;
         })
-
     }
 
     const removeFromOrder = (name: string) => {

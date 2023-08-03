@@ -6,7 +6,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import { useState, useEffect, useCallback } from 'react';
 import { db } from '../../config/firebase';
-import { getDocs, collection, updateDoc, doc, arrayUnion, query, where } from 'firebase/firestore';
+import { getDocs, collection, updateDoc, doc, arrayUnion } from 'firebase/firestore';
 import { auth } from "../../config/firebase";
 import { useNavigate } from 'react-router-dom';
 
@@ -19,7 +19,10 @@ type RestaurantData = {
     name: string,
     prizeRange: number,
     stars: number | null,
-    totalRating: number[],
+    totalRating: {
+        email: string,
+        rating: number
+    }[]
     id: string,
     voterEmails: string[],
     location: string
@@ -33,6 +36,8 @@ export default function Catalog() {
     const [searchResult, setSearchResult] = useState<string | null>('')
 
     const navigate = useNavigate();
+
+    console.log(auth.currentUser?.email)
 
     const getRestaurantData = useCallback(async () => {
         const data = await getDocs(restaurantsRef);
@@ -116,15 +121,17 @@ export default function Catalog() {
                                 loading='lazy'
                                 onClick={() => (navigate(`/restaurant/${item.id}/${item.name}`))}
                             />
-                            <ImageListItemBar className={styles['rating']} title={<Rating className={styles['stars']}
-                                precision={0.5}
-                                size='medium'
-                                value={Math.round(item.totalRating.map(function (x, i, arr) { return x / arr.length }).reduce(function (a, b) { return a + b }) / 0.5) * 0.5}
-                                readOnly={item.voterEmails.some(x => x === auth.currentUser?.email) || auth.currentUser === null}
-                                onChange={(event, newvalue) => rateRestaurant(event, newvalue, item.id)}
-                            />}
+                            <ImageListItemBar className={styles['rating']}
+                                title={
+                                    <Rating className={styles['stars']}
+                                        precision={0.5}
+                                        size='medium'
+                                        value={Math.round(item.totalRating.map(function (x, i, arr) { return x.rating / arr.length }).reduce(function (a, b) { return a + b }) / 0.5) * 0.5}
+                                        readOnly={item.voterEmails.some(x => x === auth.currentUser?.email) || auth.currentUser === null}
+                                        onChange={(event, newvalue) => rateRestaurant(event, newvalue, item.id)}
+                                    />}
                                 subtitle={
-                                    <>
+                                    <>                                   
                                         <div className={styles['catalogIcons']}>
                                             <RestaurantIcon fontSize='small' />
                                             <span>{item.kitchenType}</span>

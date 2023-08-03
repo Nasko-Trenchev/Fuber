@@ -1,0 +1,10 @@
+
+.comments {
+    display: flex;
+    flex-direction: row;
+}
+
+.commentsUser {
+    flex-basis: 50%;
+    align-self: center;
+}

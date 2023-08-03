@@ -5,15 +5,20 @@
 }
 
 .detailsPageContainer h1 {
-    flex: 1 0 100%;
+    /* flex: 1 0 100%;
     text-align: center;
-    padding: 0.5em;
+    padding: 0.5em; */
 }
 
 .menuItem {
-    display: flex;
-    justify-content: space-around;
+    /* display: flex;
+    justify-content: space-around; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* place-content: center; */
+    /* justify-items: center; */
     align-items: center;
+    gap: 2em;
 }
 
 .menuItem ul {
@@ -34,14 +39,18 @@
 .menuItemImgContainer {
     display: flex;
     align-items: center;
-    width: 150px;
-    height: 150px;
+    /* width: 150px;
+    height: 150px; */
 }
 
-.descriptionContainer {
+.menuStars {
+    justify-self: end;
+}
+
+/* .descriptionContainer {
     max-width: 175px;
     overflow: hidden;
-}
+} */
 
 .descriptionContainer p {
     font-size: 16px;
@@ -60,7 +69,26 @@
     font-size: 14px;
 }
 
-.test {
-    background-color: inherit;
-    border: none;   
+.mapPosition {
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.commentSection {
+    flex-basis: 75%;
+}
+
+.detailsTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 55%;
+    padding: 1em;
+}
+
+.detailsTitle span {
+    align-self: flex-start;
+    padding-top: 0.5em;
 }

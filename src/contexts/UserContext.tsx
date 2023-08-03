@@ -8,7 +8,8 @@ export interface AuthContextModel {
     loginUser: (email: string, password: string) => Promise<UserCredential>
     createUser: (email: string, password: string) => Promise<UserCredential>
     signOutUser: () => Promise<void>
-    singUpWithGoogle: () => Promise<UserCredential>;
+    singUpWithGoogle: () => Promise<UserCredential>
+    isAuthenticated: boolean
 }
 
 type UserContextProviderProps = {
@@ -37,6 +38,10 @@ export const AuthContextProvider = ({ children }: UserContextProviderProps): JSX
         return signInWithPopup(auth, googleProvider)
     }
 
+    const isAuthenticated = user !== null;
+    
+
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
@@ -48,7 +53,7 @@ export const AuthContextProvider = ({ children }: UserContextProviderProps): JSX
     }, [])
 
     return (
-        <UserContext.Provider value={{ createUser, loginUser, signOutUser, singUpWithGoogle, user }}>
+        <UserContext.Provider value={{ createUser, loginUser, signOutUser, singUpWithGoogle, user, isAuthenticated }}>
             {children}
         </UserContext.Provider>
     )
