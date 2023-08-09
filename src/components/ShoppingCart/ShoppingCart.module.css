@@ -1,12 +1,12 @@
 .shoppingCart {
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-wrap: wrap;
-    width: auto;
+    min-width: 250px;
     height: auto;
-    top: 70px;
-    left: 80%;
-    right: 1em;
+    top: 10%;
+    left: 77%;
+    right: 0.5em;
     z-index: 1;
     background-color: whitesmoke;
     border-radius: 10px;
@@ -17,6 +17,7 @@
     font-size: 0.8em;
 }
 
+
 .shoppingCart img {
     display: block;
     width: 50px;
@@ -25,9 +26,9 @@
 }
 
 .shoppingCartDetails {
-    flex-basis: 100%;
+    flex: 1 1 auto;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 0.5fr;
+    grid-template-columns: 1fr 2fr 1fr 0.1fr;
     justify-items: center;
     margin-left: 0.2em;
     /* display: flex;
@@ -35,14 +36,15 @@
     justify-content: space-evenly; */
     align-items: center;
     gap: 1em;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 .shoppingCartChekout {
+    flex: 1 1 100%;
     display: flex;
     flex-wrap: wrap;
-    text-align: center;
+    align-items: center;
     justify-content: center;
 }
 
@@ -50,6 +52,7 @@
     flex-basis: 80%;
     margin-bottom: 20px;
 }
+
 /* 
 .shoppingCart button:hover {
     background-color: whitesmoke;

@@ -3,6 +3,9 @@
 .navBar {
     background-color: whitesmoke;
     color: black;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .links {
