@@ -8,7 +8,7 @@ import { UserAuth } from "../../contexts/UserContext";
 
 import styles from './Comments.module.css';
 
-type Comment = {
+export type Comment = {
     stars: number,
     verified: boolean,
     date: Timestamp,
@@ -16,7 +16,7 @@ type Comment = {
     user: string
 }
 
-interface Comments {
+export interface Comments {
     comments: Comment[],
 }
 
@@ -42,8 +42,8 @@ export default function Comments() {
         getComments();
     }, [getComments])
 
-    console.log(rating);
-
+    const lastComment = commentsData?.comments.slice(-1);
+    
     const createComment = async () => {
         await updateDoc(currentRestaurantCommentsRef, {
             comments: arrayUnion({
@@ -79,9 +79,9 @@ export default function Comments() {
     //     setRating(newValue)
     // }
     return (
-        <div>
+        <div className={styles['commentContainer']}>
             <h1>Comments</h1>
-            {commentsData?.comments?.map((x) => (
+            {lastComment?.map((x) => (
                 <>
                     <Stack key={x.text} className={styles['comments']}>
                         <Stack className={styles['commentsUser']}>

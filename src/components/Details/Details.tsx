@@ -1,4 +1,4 @@
-import { Typography, Stack, Button, ImageListItem, ImageListItemBar, Rating, Box} from "@mui/material";
+import { Typography, Stack, Button, Rating, Box, Snackbar, Link } from "@mui/material";
 import { StyledEngineProvider } from '@mui/material/styles'
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
@@ -7,6 +7,9 @@ import { doc, getDoc } from "firebase/firestore";
 import { Order } from "../../contexts/OrderContext";
 import Map from '../Map/Map';
 import Comments from "../Comments/Comments";
+import RestaurantDescription from "../RestaurantDescription/RestaurantDescription";
+import { TitleContainer } from "./TittleContainer/TitleContainer";
+import { SnackbarAlert } from "../PasswordReset/PasswordReset";
 
 import styles from './Details.module.css';
 import Footer from "../Footer/Footer";
@@ -35,7 +38,9 @@ type SingleRestaurant = {
     }[]
     id: string,
     voterEmails: string[],
-    location: string
+    location: string,
+    CoverImageList: string[],
+    description: string
 };
 
 interface RestaurantDetails {
@@ -47,9 +52,11 @@ export default function Details() {
     const [restaurant, setRestaurant] = useState<SingleRestaurant | null>(null)
     const [restaurantDetails, setRestaurantDetails] = useState<RestaurantDetails | null>(null)
     const [count, setCount] = useState<Record<string, number>>({});
+    const [error, setError] = useState(false)
+
     const { restaurantId, restaurantName } = useParams();
 
-    const { order, addOrder, increaseAmout } = Order();
+    const { order, addOrder, increaseAmout, setOrder } = Order();
 
     const currentRestaurantRef = doc(db, "Restaurants", restaurantId!);
     const currentRestaurantCollectionRef = doc(db, "Restaurants", restaurantId!, "Details", restaurantName!);
@@ -99,6 +106,12 @@ export default function Details() {
         }
         setCount(value => ({ ...value, [name]: 0 }))
         const hasIncludedBefore = order.some(x => x.title === name);
+        const sameRestaurantGuard = order.some(x => x.restaurantName === restaurantName)
+
+        if (!sameRestaurantGuard && order.length > 0) {
+            setError(true)
+            return;
+        }
 
         if (hasIncludedBefore) {
             increaseAmout(name, count[name])
@@ -108,60 +121,92 @@ export default function Details() {
         }
     }
 
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return
+        }
+        setError(false);
+    }
+
+    const clearShoppingChart = () => {
+        setOrder([]);
+        setError(false);
+    }
+
     return (
         <StyledEngineProvider injectFirst>
             <>
+                <TitleContainer
+                    name={restaurant?.name}
+                    kitchenType={restaurant?.kitchenType}
+                    location={restaurant?.location}
+                    prizeRange={restaurant?.prizeRange}
+                    imageUrl={restaurant?.ImageUrl}
+                    totalRating={restaurant?.totalRating}
+                    CoverImageList={restaurant?.CoverImageList}
+                ></TitleContainer>
+                <RestaurantDescription
+                    description={restaurant?.description}
+                    kitchenType={restaurant?.kitchenType}
+                    location={restaurant?.location}
+                    prizeRange={restaurant?.prizeRange}
+                ></RestaurantDescription>
+                <div className={styles['mapPosition']}>
+                    <Map />
+                </div>
                 <div className={styles['detailsPageContainer']}>
                     <div className={styles['detailsTitle']}>
-                        <Typography variant="h1">{restaurantName}</Typography>
-                        <Rating
-                            size='medium'
-                            readOnly
-                            precision={0.5}
-                            value={
-                                restaurant?.totalRating !== undefined ?
-                                    Math.round(restaurant?.totalRating.map(function (x, i, arr) { return x.rating / arr.length }).reduce(function (a, b) { return a + b }) / 0.5) * 0.5
-                                    : 0}
-                        />
-                        <Box sx={{ ml: 2 }}>{`votes ${restaurant?.totalRating.length}`}</Box>
+                        <Typography variant="h3">Menu</Typography>
                     </div>
-                    <div className={styles['mapPosition']}>
-                        <div>
-                            <Map />
-                        </div>
-                    </div>
-                    <Stack width={"1200px"} direction='column' spacing={2} sx={{ backgroundColor: 'white' }}>
+                    <Stack width={"75%"} direction='column' spacing={2} sx={{ backgroundColor: 'white' }}>
                         <>
                             {restaurantDetails?.Dishes.map((dish) => (
                                 <Stack key={dish.name} spacing={2} direction='row' className={styles['menuItem']}>
                                     <Stack className={styles['menuItemImgContainer']}>
                                         <img src={dish.Image} alt="foodPicture" />
-                                        <Rating
+                                        {/* <Rating
                                             className={styles['menuStars']}
                                             precision={0.5}
                                             size='medium'
-                                        />
+                                        /> */}
                                     </Stack>
                                     <Stack>
                                         <h2>{dish.name}</h2>
                                         <p>{dish.description}</p>
                                         <ul>
+                                            <li><strong>Ingreadiants:</strong> &nbsp;</li>
                                             {dish.Ingreadiants.map((ingreadiant, index, arr) => (
                                                 index == arr.length - 1 ?
-                                                    <li key={ingreadiant} className={styles['ingreadiants']}>{ingreadiant}</li>
+                                                    <li key={index} className={styles['ingreadiants']}>{ingreadiant}</li>
                                                     :
-                                                    <li key={ingreadiant} className={styles['ingreadiants']}>{ingreadiant},</li>
+                                                    <li key={index} className={styles['ingreadiants']}>{ingreadiant}, </li>
                                             ))}
                                         </ul>
                                     </Stack>
                                     <Stack direction='column' spacing={1} sx={{ placeItems: 'center', alignContent: 'center' }}>
                                         <Stack direction={'row'}>
-                                            <Button disabled={count[dish.name] ? false : true} onClick={() => { changeCount(dish.name, "decrease") }} sx={{ maxWidth: '10px', maxHeight: '30px' }} >-</Button>
+                                            <Button
+                                                disabled={count[dish.name] ? false : true}
+                                                onClick={() => { changeCount(dish.name, "decrease") }}
+                                                sx={{ maxWidth: '10px', maxHeight: '30px' }}
+                                            >
+                                                -
+                                            </Button>
                                             <span>{count[dish.name] || 0}</span>
-                                            <Button onClick={() => { changeCount(dish.name, "increase") }} sx={{ maxWidth: '10px', maxHeight: '30px' }} >+</Button>
+                                            <Button
+                                                onClick={() => { changeCount(dish.name, "increase") }}
+                                                sx={{ maxWidth: '10px', maxHeight: '30px' }}
+                                            >
+                                                +
+                                            </Button>
                                         </Stack>
                                         <Stack className={styles['menuPrice']} sx={{ flexBasis: '50%', marginTop: '30px' }}>
-                                            <Button disabled={count[dish.name] ? false : true} onClick={() => addToChart(dish.Image, dish.name, dish.price)}>Add to chart</Button>
+                                            <Button
+                                                disabled={count[dish.name] ? false : true}
+                                                onClick={() => addToChart(dish.Image, dish.name, dish.price)}
+                                            >
+                                                Add to chart
+                                            </Button>
                                             <p>{dish.price} лв.</p>
                                         </Stack>
                                     </Stack>
@@ -173,9 +218,23 @@ export default function Details() {
                         <Comments />
                     </div>
                 </div >
+                <Snackbar
+                    open={error}
+                    onClose={handleClose}
+                    autoHideDuration={10000}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center'
+                    }} >
+                    <SnackbarAlert onClose={handleClose} severity='error'>
+                        You can only order from 1 restaurant at a time!
+                        <br />
+                        <Button variant="text" size="small" onClick={clearShoppingChart}>Clear shopping chart</Button>
+                    </SnackbarAlert>
+                </Snackbar>
                 <Footer />
             </>
-        </StyledEngineProvider>
+        </StyledEngineProvider >
 
     )
 }

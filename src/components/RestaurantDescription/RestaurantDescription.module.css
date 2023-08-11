@@ -1,0 +1,16 @@
+.restaurantDescriptionContainer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+    background-color: white;
+}
+
+.titleIconsContainer {
+    flex: 0 1 50%;
+}
+
+.restaurantDescription {
+    flex: 0 1 50%;
+}

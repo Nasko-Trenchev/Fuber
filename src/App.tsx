@@ -5,6 +5,7 @@ import { AuthContextProvider } from './contexts/UserContext';
 import { Register } from './components/Register/Register';
 import Logout from './components/Logout/Logout';
 import Login from './components/Login/Login';
+import Profile from './components/Profile/Profile';
 import PasswordReset from './components/PasswordReset/PasswordReset';
 import Details from './components/Details/Details';
 import { OrderContextProvider } from './contexts/OrderContext';
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/profile' element={<Profile />} />
             <Route path='/register' element={<Register />} />
             <Route path='/logout' element={<Logout />} />
             <Route path='/resetPassword' element={<PasswordReset />} />

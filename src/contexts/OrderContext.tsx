@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
 
 type Order = {
@@ -17,6 +17,7 @@ export interface OrderContextModel {
     order: Order[],
     showOrder: boolean,
     setShowOrder: React.Dispatch<React.SetStateAction<boolean>>,
+    setOrder: React.Dispatch<React.SetStateAction<Order[] | []>>
 
     // user: User | null
     // loginUser: (email: string, password: string) => Promise<UserCredential>
@@ -60,7 +61,7 @@ export const OrderContextProvider = ({ children }: OrderContextProviderProps) =>
     }
 
     return (
-        <OrderContext.Provider value={{ addOrder, order, increaseAmout, removeFromOrder, showOrder, setShowOrder }}>
+        <OrderContext.Provider value={{ addOrder, order, increaseAmout, removeFromOrder, showOrder, setShowOrder, setOrder }}>
             {children}
         </OrderContext.Provider>
     )

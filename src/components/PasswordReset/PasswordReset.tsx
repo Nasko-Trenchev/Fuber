@@ -5,7 +5,7 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 import styles from './PasswordReset.module.css';
 
-const SnackbarAlert = forwardRef<HTMLDivElement, AlertProps>(
+export const SnackbarAlert = forwardRef<HTMLDivElement, AlertProps>(
     function SnackbarAlert(props, ref) {
         return <Alert elevation={6} ref={ref} {...props} />
     }

@@ -1,0 +1,94 @@
+.tittlePageContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    font-size: 12px;
+    margin-top: 2em;
+}
+
+.imgTitle {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex: 0 1 60%;
+    background-color: white;
+}
+
+.imgTitle img {
+    height: 100px;
+    width: auto;
+    align-self: center;
+}
+
+.imgTitle h1 {
+    align-self: center;
+    margin-bottom: 0;
+    font-size: 3em;
+    font-weight: 400;
+}
+
+.titleRestaurantPicture {
+    flex: 0 1 40%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.titleRestaurantPicture img {
+    width: 100%;
+    height: auto;
+}
+
+.titleIconsContainer {
+    flex: 0 1 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.titleIcons {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.lastTitleComment {
+    flex: 0 1 50%;
+    text-align: center;
+}
+
+.sliderStyles {
+    height: 100%;
+    position: relative;
+}
+
+.leftArrow {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 12px;
+    color: rgb(247, 244, 238);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.rightArrow {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 12px;
+    color: rgb(247, 244, 238);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.slideDots {
+    display: flex;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: white;
+    cursor: pointer;
+}

@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Stack, Button, Badge } from "@mui/material";
 import { StyledEngineProvider } from '@mui/material/styles';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, Link } from 'react-router-dom';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -44,6 +44,10 @@ export default function NavigationHeader() {
                             </>
                         }
                     </Stack>
+                    <IconButton size="large" edge='start' color="inherit" aria-label="logo" sx={{ margin: '1px' }}
+                        onClick={() => navigate('/profile')}>
+                        <AccountCircleIcon />
+                    </IconButton>
                     <IconButton size="large" edge='start' color="inherit" aria-label="logo" sx={{ margin: '1px' }}>
                         <FacebookIcon />
                     </IconButton>

@@ -1,10 +1,14 @@
 
+.commentContainer {
+    flex: 0 1 75%;
+    font-size: 12px;
+}
 .comments {
     display: flex;
     flex-direction: row;
 }
 
 .commentsUser {
-    flex-basis: 50%;
+    flex-basis: 100%;
     align-self: center;
 }

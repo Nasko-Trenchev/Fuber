@@ -2,21 +2,24 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    font-size: 12px;
 }
 
-.detailsPageContainer h1 {
-    /* flex: 1 0 100%;
-    text-align: center;
-    padding: 0.5em; */
+.detailsTitleContainer {
+    display: flex;
+    justify-content: center;
+    flex: 0 1 50%;
+}
+
+.imgTitle {
+    display: flex;
+    justify-content: space-between;
+    flex: 0 1 50%;
 }
 
 .menuItem {
-    /* display: flex;
-    justify-content: space-around; */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    /* place-content: center; */
-    /* justify-items: center; */
     align-items: center;
     gap: 2em;
 }
@@ -39,21 +42,10 @@
 .menuItemImgContainer {
     display: flex;
     align-items: center;
-    /* width: 150px;
-    height: 150px; */
 }
 
 .menuStars {
     justify-self: end;
-}
-
-/* .descriptionContainer {
-    max-width: 175px;
-    overflow: hidden;
-} */
-
-.descriptionContainer p {
-    font-size: 16px;
 }
 
 .menuPrice {
@@ -66,18 +58,20 @@
 }
 
 .ingreadiants {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .mapPosition {
-    width: 1200px;
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
 }
 
 .commentSection {
-    flex-basis: 75%;
+    display: flex;
+    margin-top: 2em;
+    flex: 0 1 75%;
 }
 
 .detailsTitle {

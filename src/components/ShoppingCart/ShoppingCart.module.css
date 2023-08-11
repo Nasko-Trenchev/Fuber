@@ -2,10 +2,11 @@
     position: fixed;
     display: flex;
     flex-wrap: wrap;
-    min-width: 250px;
+    max-width: 250px;
+    min-width: 200px;
     height: auto;
-    top: 10%;
-    left: 77%;
+    top: 80px;
+    left: 80%;
     right: 0.5em;
     z-index: 1;
     background-color: whitesmoke;
